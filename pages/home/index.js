@@ -21,7 +21,6 @@ const Index = () => (
       <Text>
         Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code>.
       </Text>
-
       <List spacing={3} my={0}>
         <ListItem>
           <ListIcon as={CheckCircleIcon} color="green.500" />

@@ -1,9 +1,13 @@
 
 import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react'
 import Router from 'next/router'
+import { useTheme, withTheme } from '@emotion/react'
+
 import theme from './theme'
 
 import ApolloControl from 'lib/apolloControl'
+
+import withApollo from 'lib/withApollo'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -19,7 +23,9 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
+// export default MyApp
+// export default withTheme(MyApp)
+export default withTheme(withApollo(MyApp))
 
 //目录
 initRouterListeners()

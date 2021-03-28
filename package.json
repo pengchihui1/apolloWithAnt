@@ -28,6 +28,7 @@
     "emotion-theming": "^11.0.0",
     "framer-motion": "^4.0.3",
     "graphql": "^14.0.2",
+    "isomorphic-unfetch": "^3.1.0",
     "knex": "^0.95.4",
     "next": "latest",
     "next-seo": "^4.23.0",

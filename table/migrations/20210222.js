@@ -16,6 +16,6 @@ exports.up = async function (knex) {
 }
 
 exports.down = async function (knex, Promise) {
-  await knex.raw('DROP TABLE todos CASCADE')
+  // await knex.raw('DROP TABLE todos CASCADE')
   // await knex.schema.dropTableIfExists('todos')
 }

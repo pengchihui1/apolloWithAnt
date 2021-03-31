@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 await knex('todos').insert([
     { text: 'Buy milk', done: true },
     { text: 'Wash car', done: false },

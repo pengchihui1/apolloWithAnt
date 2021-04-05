@@ -19,7 +19,7 @@ import {
 
 import NextLink from 'next/link'
 import { AiOutlineLogout } from 'react-icons/ai'
-import { MdDashboard } from 'components/header/node_modules/react-icons/md'
+import { MdDashboard } from 'react-icons/md'
 import { getImgixUrl } from 'lib/imgix'
 
 import useCurrentUserState from 'lib/useCurrentUserState'

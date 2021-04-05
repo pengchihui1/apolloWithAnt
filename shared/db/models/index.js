@@ -1,11 +1,12 @@
-
 const omitBy = require('lodash/omitBy')
 const isUndefined = require('lodash/isUndefined')
 const { db } = require('../knex')
 
 // 查询todo的数据
 const getTodos = async () => {
+
   const knex = db()
+  
   return knex
     .select('*')
     .from('todos')
@@ -14,5 +15,5 @@ const getTodos = async () => {
 }
 
 module.exports = {
-  getTodos
+    getTodos
 }

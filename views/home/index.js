@@ -12,7 +12,7 @@ import { Container } from 'components/Container'
 
 import HeadTop from 'components/common/headTop'
 import Caserl from 'components/common/caserl'
-import Container1280 from 'components/common/container1280'
+import Container1280 from 'components/common/containerCenter'
 import { Header,HeaderCenter} from 'components/Header'
 
 import Router from 'next/router'

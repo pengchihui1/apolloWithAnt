@@ -15,6 +15,7 @@ const Table = memo((props) => {
       as='table'
       w='100%'
       m='auto'
+      fontSize='14px'
       letterSpacing='0.05rem'
       {...props}
     />

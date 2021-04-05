@@ -4,7 +4,7 @@ import {
   Flex
 } from '@chakra-ui/react'
 
-import Container from 'components/common/container1280'
+import Container from 'components/common/containerCenter'
 
 import LeftFieldset from './leftFieldset'
 import RightFieldset from './rightFieldset'

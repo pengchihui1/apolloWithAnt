@@ -40,7 +40,9 @@
     "apollo-link-state": "^0.4.2",
     "apollo-server-micro": "^2.21.0",
     "babel-eslint": "^10.1.0",
+    "downloadjs": "^1.4.7",
     "emotion-theming": "^11.0.0",
+    "formik": "^2.2.6",
     "framer-motion": "^4.0.3",
     "graphql": "^14.0.2",
     "isomorphic-unfetch": "^3.1.0",
@@ -52,6 +54,7 @@
     "react": "^16.7.1",
     "react-dom": "^16.7.1",
     "react-icons": "^4.2.0",
+    "use-debounce": "^6.0.0",
     "uuid": "^8.3.2"
   },
   "license": "MIT",

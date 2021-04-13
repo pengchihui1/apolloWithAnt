@@ -1,7 +1,6 @@
-import { makeExecutableSchema } from 'graphql-tools'
 // const { makeExecutableSchema, addSchemaLevelResolver } = require('@graphql-tools/schema')
 
-const merge = require('lodash/merge')
+import { makeExecutableSchema } from 'graphql-tools'
 // ! ========================= types ============================
 import { UserType } from './types/UserType'
 import { TodoType } from './types/TodoType'
@@ -9,6 +8,8 @@ import { TodoType } from './types/TodoType'
 // ! ========================= queries ============================
 import { userResolver } from './queries/userresolvers'
 import { todosResolver } from './queries/todoresolvers'
+
+const merge = require('lodash/merge')
 
 const typeDefs = [
   UserType,

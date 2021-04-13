@@ -1,16 +1,15 @@
-import{
+import {
   Box,
   Text
-}from '@chakra-ui/react'
+} from '@chakra-ui/react'
 
 import WordHead from 'components/header/wordHead'
 import SectionCsv from './sectionCsv'
 
-const WordCsvPage=()=>{
-
-  return(
+const WordCsvPage = () => {
+  return (
     <WordHead title='单词汇入'>
-        <SectionCsv /> 
+      <SectionCsv />
     </WordHead>
   )
 }

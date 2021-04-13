@@ -54,6 +54,7 @@
     "react": "^16.7.1",
     "react-dom": "^16.7.1",
     "react-icons": "^4.2.0",
+    "standard": "^16.0.3",
     "use-debounce": "^6.0.0",
     "uuid": "^8.3.2"
   },

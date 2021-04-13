@@ -17,5 +17,5 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   await knex.schema.dropTableIfExists('roles')
-  //dropTableIfExists 如果表存在 相应的删除表
+  // dropTableIfExists 如果表存在 相应的删除表
 }

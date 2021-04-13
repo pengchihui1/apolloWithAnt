@@ -42,7 +42,6 @@ const exportTemplate = () => {
 
   const download = require('downloadjs')
   download('\uFEFF' + contentUnicode, '批量新增班級範例格式.csv', 'text/csv')
-
 }
 
 const convertToUnicode = (text) => {
@@ -72,8 +71,8 @@ const SectionCsv = () => {
   // }, [error])
 
   return (
-      <Box>
-        <Box
+    <Box>
+      <Box
           py={4}
           px={2}
           flex='1'
@@ -261,7 +260,7 @@ const SectionCsv = () => {
             />
           </Box>
         </Box>
-      </Box>
+    </Box>
   )
 }
 

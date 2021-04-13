@@ -1,33 +1,32 @@
-/**
- * @namespace Role
- */
+const { db } = require('../knex')
+const { v4: uuidv4 } = require('uuid')
 
-const { getKnex } = require('../knex')
 
+// 创建权限用户
 const createRole = async (args) => {
-  const knex = getKnex()
+  const knex = db()
   const {
-    schooluserId,
-    schoolId,
+    userId,
+    platformId,
+    moduleId
     role,
-    module
   } = args.input
-
   return knex('roles')
     .returning('*')
     .insert({
-      schooluser_id: schooluserId,
-      school_id: schoolId,
-      role,
-      module
+      id: uuidv4,
+      user_id: userId,
+      platforms_id: platformId,
+      modules_id: moduleId,
+      role
     })
     .then(rows => {
       return rows.length ? rows[0] : null
     })
 }
-
+// 编辑用户权限
 const editRole = async (args) => {
-  const knex = getKnex()
+  const knex = db()
   const {
     roleId,
     role
@@ -37,7 +36,7 @@ const editRole = async (args) => {
     .returning('*')
     .whereNull('deleted_at')
     .andWhere({
-      id: roleId
+      id:roleId
     })
     .update({
       modified_at: new Date(),
@@ -49,7 +48,7 @@ const editRole = async (args) => {
 }
 
 const deleteRole = async (args) => {
-  const knex = getKnex()
+  const knex = db()
   const {
     roleId
   } = args.input
@@ -58,7 +57,7 @@ const deleteRole = async (args) => {
     .returning('*')
     .whereNull('deleted_at')
     .andWhere({
-      id: roleId
+      id:roleId
     })
     .update({
       deleted_at: new Date()
@@ -70,7 +69,7 @@ const deleteRole = async (args) => {
 
 // 直接刪除db資料
 const forceDeleteRole = async (args) => {
-  const knex = getKnex()
+  const knex = db()
   const {
     roleId
   } = args.input
@@ -83,14 +82,14 @@ const forceDeleteRole = async (args) => {
 }
 
 const getRolesBySchooluserId = async (schooluserId) => {
-  const knex = getKnex()
+  const knex = db()
   return knex('roles')
     .whereNull('deleted_at')
     .andWhere({ schooluser_id: schooluserId })
 }
 
 const getRolesBySchoolIdAndModule = (schoolId, module, { first = 99999, after = 0 }) => {
-  const knex = getKnex()
+  const knex = db()
   return knex('roles as r')
     .whereNull('r.deleted_at')
     .andWhere({
@@ -110,7 +109,7 @@ const getRolesBySchoolIdAndModule = (schoolId, module, { first = 99999, after = 
 }
 
 const getRoleBySchooluserIdAndModule = async (schooluserId, module) => {
-  const knex = getKnex()
+  const knex = db()
   return knex('roles')
     .whereNull('deleted_at')
     .andWhere({

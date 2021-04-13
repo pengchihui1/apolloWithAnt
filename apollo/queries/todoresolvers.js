@@ -1,4 +1,4 @@
-const { getTodos } = require('shared/db/models/index')
+const { getTodos } = require('shared/db/models/todo')
 
 export const todosResolver = {
     Query: {

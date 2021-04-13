@@ -27,7 +27,6 @@ import HeadTop from 'components/common/headTop'
 import ContainPage from 'components/containPage'
 
 const ChallengeTime=()=>{
-
     return (
     <Container height="100vh">
         <ContainPage>

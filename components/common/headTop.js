@@ -1,5 +1,4 @@
 import {
-  Box,
   Heading,
   Flex
 } from '@chakra-ui/react'

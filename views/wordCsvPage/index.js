@@ -1,8 +1,3 @@
-import {
-  Box,
-  Text
-} from '@chakra-ui/react'
-
 import WordHead from 'components/header/wordHead'
 import SectionCsv from './sectionCsv'
 

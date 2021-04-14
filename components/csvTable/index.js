@@ -12,7 +12,7 @@ const CsvTable = ({ tableHead, csvContent }) => {
     <Box border='1px solid #e6e6e6' overflow='auto' minH='300px' maxH='500px'>
       <Box>
         <Box as='table' border='1' w='auto'>
-          <Box as='thead'  className='csv-table-head'>
+          <Box as='thead' className='csv-table-head'>
             <Box as='tr' h='50px'>
               <Box as='th' className='csv-tabel-haed-item'>
                 <Box textAlign='center' w='90px'>序號</Box>

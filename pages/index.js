@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Router from 'next/router'
 
 class Index extends React.Component {
-  static getInitialProps({ req, res }) {
+  static getInitialProps ({ req, res }) {
     if (typeof window === 'undefined' && !res.writeHead) {
       const host = req.headers['x-forwarded-host'] || req.headers.host
       if (host === 'localhost:3000') {
@@ -33,7 +33,7 @@ class Index extends React.Component {
     return {}
   }
 
-  render() {
+  render () {
     if (this.props.metaRedirect) {
       return (
         <Head>

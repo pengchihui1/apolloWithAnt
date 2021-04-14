@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import { Box, Spinner } from '@chakra-ui/react'
 
-import EmptyLayout from './emptyLayout'
 import HomeLayout, { homeConfig } from './homeLayout'
 
 const Layout = ({ children, empty = false, hideFooter = false, isLoading = false, errorMessage = '' }) => {
@@ -12,8 +11,8 @@ const Layout = ({ children, empty = false, hideFooter = false, isLoading = false
   const isRouterQueryReady = router.asPath.indexOf('[') === -1
 
   // 根據不同的 path 使用不同的 layout
-  let Layout = HomeLayout
-  let config = homeConfig
+  const Layout = HomeLayout
+  const config = homeConfig
 
   // if (empty) {
   //   Layout = EmptyLayout
@@ -21,12 +20,12 @@ const Layout = ({ children, empty = false, hideFooter = false, isLoading = false
   //   Layout = EmptyLayout
   // } else if (router.pathname.indexOf('/school/mobile') === 0) {
   //   Layout = EmptyLayout
-  // } else 
-  
-  if (router.pathname.indexOf('/home/') === 0) {
-    Layout = SchoolLayout
-    config = switchConfig
-  }
+  // } else
+
+  // if (router.pathname.indexOf('/home/') === 0) {
+  //   Layout = SchoolLayout
+  //   config = switchConfig
+  // }
 
   return (
     <Layout
@@ -57,7 +56,7 @@ const Layout = ({ children, empty = false, hideFooter = false, isLoading = false
             <Box pt={40} pb={24} textAlign='center'>
               <Spinner data-cy='page-loading' />
             </Box>
-          )
+            )
           // 已載入時
           // 但有錯誤訊息時
           // 顯示錯誤訊息
@@ -66,7 +65,7 @@ const Layout = ({ children, empty = false, hideFooter = false, isLoading = false
               <Box pt={40} pb={24} textAlign='center'>
                 {errorMessage}
               </Box>
-            )
+              )
             // 沒有錯誤訊息時
             // 可顯示 children
             : children

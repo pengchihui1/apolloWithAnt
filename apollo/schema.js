@@ -1,36 +1,41 @@
 // const { makeExecutableSchema, addSchemaLevelResolver } = require('@graphql-tools/schema')
 
 import { makeExecutableSchema } from 'graphql-tools'
+
+// 其它字符串解析器
+const scalars = require('apollo/types/scalars')
+const generalTypes = require('apollo/types/general')
+
 // ! ========================= types ============================
-import { UserType } from './types/UserType'
-import { TodoType } from './types/TodoType'
+const { UserType } = require('apollo/types/User')
+const { TodoType } = require('apollo/types/Todo')
+const { WordType } = require('apollo/types/Word')
 
 // ! ========================= queries ============================
-import { userResolver } from './queries/userresolvers'
-import { todosResolver } from './queries/todoresolvers'
+const user = require('apollo/queries/user')
+const todo = require('apollo/queries/todo')
+const word = require('apollo/queries/word')
 
 const merge = require('lodash/merge')
 
 const typeDefs = [
+  scalars.typeDefs,
+  generalTypes,
   UserType,
-  TodoType
+  TodoType,
+  WordType
 ]
 
 const resolvers = merge(
   {},
-  userResolver,
-  todosResolver
+  // queries
+  scalars.resolvers,
+  user,
+  todo,
+  word
 )
 
 export const schema = makeExecutableSchema({
   typeDefs: typeDefs,
   resolvers: resolvers
 })
-
-// schema = addSchemaLevelResolver(schema, async (root, args, ctx, info) => {
-//   if (info && info.operation && info.operation.__runAtMostOnce) {
-//     delete info.operation.__runAtMostOnce
-//   }
-// })
-
-// module.exports = schema

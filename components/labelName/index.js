@@ -7,7 +7,7 @@ import React from 'react'
 // 用戶信息的 component ，類型加名字加職業
 const LabelName = ({ label, text, labelProps, noComma = false, children, ...props }) => {
   return (
-    <Box as='div' d='flex' lineHeight='25px' >
+    <Box as='div' d='flex' lineHeight='25px'>
       {!!label && (
         <Box d='flex' flexShrink='0' {...labelProps}>
           <Text w='100%' className='textlabel-align-last' {...props}>

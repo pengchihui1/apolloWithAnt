@@ -1,11 +1,5 @@
 import {
-  Text,
-  Code,
-  List,
-  ListIcon,
-  ListItem,
-  HStack,
-  Heading
+  HStack
 } from '@chakra-ui/react'
 import Router from 'next/router'
 

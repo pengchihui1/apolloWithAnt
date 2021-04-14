@@ -1,8 +1,3 @@
-import {
-  Flex,
-  Button
-} from '@chakra-ui/react'
-
 import { Container } from 'components/Container'
 import HeadTop from 'components/common/headTop'
 import ContainPage from 'components/containPage'

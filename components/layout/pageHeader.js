@@ -1,25 +1,15 @@
-import React, { memo, useContext } from 'react'
+import React from 'react'
+
 import {
   Box,
-  useColorMode,
-  Button,
-  Menu,
-  Avatar,
-  MenuList,
-  Link,
-  MenuItem,
-  Flex
+  Flex,
+  Button
 } from '@chakra-ui/react'
 
 import {
   Header as HeaderComponent,
-  HeaderMenuButton,
-  DrawerItemButton,
-  DrawerItemDivider,
   HeaderLogo,
-  HeaderCenter,
-  HeaderMobileNav,
-  HeaderRight
+  HeaderCenter
 } from 'components/header'
 
 import { IoMdPaper, IoMdSearch } from 'react-icons/io'
@@ -36,11 +26,11 @@ const Header = ({ hideNavLinks = false, loading = false, schooluser, ...rest }) 
         </Box>
       </HeaderLogo>
       <HeaderCenter>
-          <Flex maxW='400px'>
-            <Button icon={IoMdPaper}> 首頁 </Button>
-            <Button icon={MdDashboard}> 學校專頁 </Button>
-            <Button icon={IoMdSearch}> 搜索 </Button>
-          </Flex>
+        <Flex maxW='400px'>
+          <Button icon={IoMdPaper}> 首頁 </Button>
+          <Button icon={MdDashboard}> 學校專頁 </Button>
+          <Button icon={IoMdSearch}> 搜索 </Button>
+        </Flex>
       </HeaderCenter>
     </HeaderComponent>
   )

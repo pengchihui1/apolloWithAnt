@@ -6,6 +6,7 @@ export const TodoType = gql`
     text: String
     done: Boolean
   }
+
   type Query {
     viewTodo: [Todo]
   }

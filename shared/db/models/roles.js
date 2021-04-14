@@ -1,15 +1,14 @@
 const { db } = require('../knex')
 const { v4: uuidv4 } = require('uuid')
 
-
 // 创建权限用户
 const createRole = async (args) => {
   const knex = db()
   const {
     userId,
     platformId,
-    moduleId
-    role,
+    moduleId,
+    role
   } = args.input
   return knex('roles')
     .returning('*')
@@ -36,7 +35,7 @@ const editRole = async (args) => {
     .returning('*')
     .whereNull('deleted_at')
     .andWhere({
-      id:roleId
+      id: roleId
     })
     .update({
       modified_at: new Date(),
@@ -57,7 +56,7 @@ const deleteRole = async (args) => {
     .returning('*')
     .whereNull('deleted_at')
     .andWhere({
-      id:roleId
+      id: roleId
     })
     .update({
       deleted_at: new Date()

@@ -1,20 +1,20 @@
 
 import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react'
 import Router from 'next/router'
-import { useTheme, withTheme } from '@emotion/react'
+import { withTheme } from '@emotion/react'
 
 import theme from './theme'
 
-import ApolloControl from 'lib/apolloControl'
+// import ApolloControl from 'lib/apolloControl'
 
 import withApollo from 'lib/withApollo'
 
-function MyApp({ Component, pageProps }) {
+function MyApp ({ Component, pageProps }) {
   return (
     <ChakraProvider resetCSS theme={theme}>
       <ColorModeProvider
         options={{
-          useSystemColorMode: true,
+          useSystemColorMode: true
         }}
       >
         <Component {...pageProps} />
@@ -27,12 +27,12 @@ function MyApp({ Component, pageProps }) {
 // export default withTheme(MyApp)
 export default withTheme(withApollo(MyApp))
 
-//目录
+// 目录
 initRouterListeners()
 
 const ROUTES_TO_RETAIN = ['/home/[pengId]']
 
-function initRouterListeners() {
+function initRouterListeners () {
   if (typeof window === 'undefined' || window.__initializedRouterListeners) return
   window.__initializedRouterListeners = true
 

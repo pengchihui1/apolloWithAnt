@@ -64,7 +64,7 @@ const Fieldset = ({ Line = false, children, ...props }) => {
 
 export default Fieldset
 
-export{
+export {
   Fieldset,
   FieldsetHeader,
   LeftFieldset,

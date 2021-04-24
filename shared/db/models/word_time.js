@@ -1,6 +1,20 @@
 const { db } = require('../knex')
 const { v4: uuidv4 } = require('uuid')
 
+const getWordTime = async (args) => {
+  const knex = db()
+  return knex('word_time')
+}
+
+const getLimitWordTime = async ({ first = 20, after = 0 }) => {
+  const knex = db()
+  return knex('word_time')
+    .whereNull('deleted_at')
+    .orderBy('created_at', 'desc')
+    .offset(after)
+    .limit(first)
+}
+
 const creatWordTime = async (args) => {
   const knex = db()
   const {
@@ -8,17 +22,20 @@ const creatWordTime = async (args) => {
     endAt,
     time
   } = args.input
+
   return knex('word_time')
     .returning('*')
     .insert({
-      id: uuidv4,
       start_date: startAt,
       end_date: endAt,
       challenge_time: time
     })
+    .then(rows => {
+      return rows.length ? rows[0] : null
+    })
 }
 
-const editWordTime = async (args) => {
+const updateWordTime = async (args) => {
   const knex = db()
   const {
     id,
@@ -26,11 +43,13 @@ const editWordTime = async (args) => {
     endAt,
     time
   } = args.input
-
   return knex('word_time')
     .returning('*')
-    .andWhere({ id })
-    .updata({
+    .whereNull('deleted_at')
+    .andWhere({
+      id
+    })
+    .update({
       modified_at: new Date(),
       start_date: startAt,
       end_date: endAt,
@@ -41,7 +60,8 @@ const editWordTime = async (args) => {
     })
 }
 
-const deleteWordTime = async (id) => {
+const deleteWordTime = async (args) => {
+  const { id } = args.input
   const knex = db()
   return knex('word_time')
     .returning('*')
@@ -58,7 +78,9 @@ const deleteWordTime = async (id) => {
 }
 
 module.exports = {
+  getWordTime,
   creatWordTime,
-  editWordTime,
-  deleteWordTime
+  updateWordTime,
+  deleteWordTime,
+  getLimitWordTime
 }

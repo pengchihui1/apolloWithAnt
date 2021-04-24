@@ -1,76 +1,72 @@
 import { gql } from '@apollo/client'
 
-const WordType = /* GraphQL */gql`
+export const WordType = gql`
   type Word{
-      # uuid
-      id: ID
-      # 短id
-      seqId: Int
-      # 創建時間
-      createdAt: date
-      # 修改時間
-      modifiedAt: Date
-      # 刪除時間
-      deletedAt: Date
-      # 单词
-      word:String
-      # 日期
-      word_data:Date
-      # 翻译
-      translation:String
-      # 读音
-      pronunciation:String
+    id: ID
+    seq_id: Int
+    created_at: Date
+    modified_at: Date
+    deleted_at: Date
+    word:String
+    word_date:Date
+    translation:String
+    pronunciation:String
   }
 
-  input CreateWordInput{ 
-      # 生效開始日期
-      startAt: Date
-      # 生效結束日期
-      endAt: Date
-      # 請假的用戶
+  input CreateWordInput{
+    word:String
+    wordAt:Date
+    translation:String
+    pronunciation:String
   }
 
   input EditWordInput{
-      # uuid
-      WordId: String
-      # 生效開始日期
-      startAt: Date
-      # 生效結束日期
-      endAt: Date
+     id: String
+     word:String
+     wordAt:Date
+     translation:String
+     pronunciation:String
   }
 
   input DeleteWordInput{
-      # uuid
-      id: String
+    id: String
   }
 
-  input FilterTime{
-      #開始時間
-      startTime:Date
-      #結束時間
-      endTime:Date
+  type WordsConnection {
+    pageInfo: PageInfo!
+    edges: [WordsEdge!]
   }
 
-  input WordFilter {
-      content: String
+  type WordsEdge {
+    cursor: Int!
+    node: Word!
   }
 
+  input WordsFilter {
+    first: Int
+    after: Int
+    search:String
+  }
+ 
+  input WordFilter{
+    word:String
+    wordAt:Date
+    translation:String
+    pronunciation:String 
+    startAt:Date
+    endAt:Date
+  }
+  
   extend type Query {
-    viewer: User
-  }
-  extend type Query {
-      getWords:[Word]
-      getWordsByTime(filter: FilterTime): [Word]
-      getWordsByContent(filter: content): [Word]
+    getWords:[Word]
+    getWordsFilter(filter: WordFilter , first: Int = 20, after: Int = 0): WordsConnection
+    getWordsByDate(wordAt:Date):[Word]
   }
 
   extend type Mutation {
-      # 建立Word
-      createWord(input: CreateWordInput): Word
-      # 編輯Word
-      editWord(input: EditWordInput): Word
-      # 刪除Word
-      deleteWord(input: DeleteWordInput): Word
+    createWord(input: CreateWordInput): Word
+    updateWord(input: EditWordInput): Word
+    deleteWord(input: DeleteWordInput): Word
   }
+
 `
-module.exports = WordType

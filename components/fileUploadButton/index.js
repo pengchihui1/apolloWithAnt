@@ -58,12 +58,11 @@ const FileUploadButton = ({ getData, disabled = false }) => {
               reader.readAsText(file)
             })
 
-            csvdata.then(content => {
-              if (getData) getData(content)
+            //   if (getData) getData(content)
 
-              // 提交完成後清空 file 的值
-              input.value = ''
-            })
+            //   // 提交完成後清空 file 的值
+            //   input.value = ''
+            // })   // csvdata.then(content => {
           }
         }}
       />

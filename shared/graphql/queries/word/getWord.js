@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import wordfoFragment from '../../fragments/word/wordInfo'
+import wordTimeInfoFragment from '../../fragments/word/wordTimeInfo'
 
 // 获取单词
 export const getWordsQuery = gql`
@@ -8,5 +8,5 @@ export const getWordsQuery = gql`
       ...wordInfo
     }
   }
-${wordfoFragment}
+${wordTimeInfoFragment}
 `

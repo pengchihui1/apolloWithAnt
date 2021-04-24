@@ -1,3 +1,15 @@
+import { getUser } from 'shared/db/models/users'
+
 export default async (_parent, _args, _context, _info) => {
-  return { id: 1, name: 'John Smith', status: 'cached' }
+  // const {
+  //   id = null,
+  //   search = {
+  //      name,
+  //      password,
+  //      email,
+  //      isAdmin
+  //   }
+  // } = _args
+  const user = getUser(_args)
+  return user
 }

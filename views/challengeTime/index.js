@@ -1,13 +1,13 @@
 import {
   Flex,
   Button,
-  IconButton
+  IconButton,
+  Box,
+  Spinner
 } from '@chakra-ui/react'
+import { useState } from 'react'
 
-import {
-  EditIcon
-} from '@chakra-ui/icons'
-
+import { EditIcon } from '@chakra-ui/icons'
 import {
   Table,
   TableBody,
@@ -16,18 +16,43 @@ import {
   TableCell
 } from 'components/table'
 
+import format from 'date-fns/format'
+
 import { Container } from 'components/Container'
 import HeadTop from 'components/common/headTop'
 import ContainPage from 'components/containPage'
 
+import { useQuery } from '@apollo/react-hooks'
+import { getWordTimeQuery } from 'shared/graphql/queries/wordTime/getWordTime'
+
 const ChallengeTime = () => {
+  const [page, setPage] = useState(1)
+  const { data, loading, error } = useQuery(getWordTimeQuery, {
+    variables: { first: 5, after: 5 },
+    fetchPolicy: 'network-only'
+  })
+  let wordTimeList = {}
+  if (data) {
+    wordTimeList = data.getWordTime
+    console.log('數據內容', data.getWordTime)
+  }
+
   return (
-    <Container height='100vh'>
+    <Container>
       <ContainPage>
         {/* 头部 */}
         <HeadTop title='挑战时间设置' />
         {/* 添加按鈕 */}
         <Flex><Button colorScheme='twitter'>添加</Button></Flex>
+        {/* 数据加载中 */}
+        {/* { loading&&!error&&!data&&{
+          
+        } */}
+
+        }
+        <Box pt={40} pb={24} textAlign='center'>
+          <Spinner />
+        </Box>
         {/* 主体 */}
         <Table my={6} textAlign='center'>
           <TableHead>
@@ -39,22 +64,55 @@ const ChallengeTime = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>2021-03-04</TableCell>
-              <TableCell>2021-03-21</TableCell>
-              <TableCell>10</TableCell>
-              <TableCell>
-                <IconButton
-                  colorScheme='blue'
-                  icon={<EditIcon />}
-                  size='sm'
-                  my={2}
-                  onClick={() => { }}
-                />
-              </TableCell>
-            </TableRow>
+            {wordTimeList.length && wordTimeList.map(wordTime => {
+              return (
+                <TableRow key={wordTime.id}>
+                  <TableCell>{wordTime?.start_date ? format(new Date(wordTime?.start_date), 'yyyy-MM-dd') : ''}</TableCell>
+                  <TableCell>{wordTime?.end_date ? format(new Date(wordTime?.end_date), 'yyyy-MM-dd') : ''}</TableCell>
+                  <TableCell>{wordTime?.challenge_time}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      colorScheme='blue'
+                      icon={<EditIcon />}
+                      size='sm'
+                      my={2}
+                      onClick={() => { }}
+                    />
+                  </TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
+        {/* 翻頁 */}
+        <Box py={2} d='flex' justifyContent='center'>
+          {page !== 1 && (
+            <Button
+              size='sm'
+              mx={5}
+              variantColor='blue'
+              onClick={() => setPage(1)}
+            >
+              第一頁
+            </Button>
+          )}
+          <Button
+            size='sm'
+            mx={5}
+            variantColor='cyan'
+            isDisabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            上一頁
+          </Button>
+          <Button
+            size='sm'
+            mx={5}
+            onClick={() => setPage(page + 1)}
+          >
+            下一頁
+          </Button>
+        </Box>
       </ContainPage>
     </Container>
   )

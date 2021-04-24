@@ -19,14 +19,14 @@ import PageLogo from './pageLogo'
 
 const Header = ({ hideNavLinks = false, loading = false, schooluser, ...rest }) => {
   return (
-    <HeaderComponent containerProps={{ h: '4rem', px: '2' }} {...rest}>
+    <HeaderComponent containerProps={{ h: '4rem', px: '2' }} bg='gray.50' {...rest}>
       <HeaderLogo>
         <Box as='a'>
           <PageLogo />
         </Box>
       </HeaderLogo>
-      <HeaderCenter>
-        <Flex maxW='400px'>
+      <HeaderCenter my={2}>
+        <Flex w='300px' justify='space-around'>
           <Button icon={IoMdPaper}> 首頁 </Button>
           <Button icon={MdDashboard}> 學校專頁 </Button>
           <Button icon={IoMdSearch}> 搜索 </Button>

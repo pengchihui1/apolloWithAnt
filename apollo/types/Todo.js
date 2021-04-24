@@ -10,5 +10,8 @@ export const TodoType = gql`
   type Query {
     viewTodo: [Todo]
   }
+  type Mutation {
+    editTodo: Todo
+  }
 
 `

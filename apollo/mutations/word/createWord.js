@@ -1,7 +1,6 @@
-const { getTodos } = require('shared/db/models/todo')
+import { createWord } from 'shared/db/models/words'
 
 export default async (_parent, _args, _context, _info) => {
-  // const result = await getTodos()
-  // console.log(result)
-  return getTodos()
+  const words = await createWord(_args)
+  return words
 }

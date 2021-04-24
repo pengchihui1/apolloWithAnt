@@ -1,21 +1,77 @@
 const { db } = require('../knex')
 const { v4: uuidv4 } = require('uuid')
+const omitBy = require('lodash/omitBy')
+const isUndefined = require('lodash/isUndefined')
+
+const getWords = async () => {
+  const knex = db()
+  return knex.select('*').from('words')
+}
+
+const getLimitWords = async ({ first = 20, after = 0, filter = {} }) => {
+  const knex = db()
+  const {
+    // word = null,
+    // wordAt = null,
+    // translation = null,
+    // pronunciation = null,
+    startAt = null,
+    endAt = null
+  } = filter
+
+  return knex('words')
+    .whereNull('deleted_at')
+    // .andWhere({
+    //   word,
+    //   word_data:wordAt,
+    //   translation,
+    //   pronunciation
+    // })
+    .andWhere(builder => {
+      if (startAt && endAt) {
+        return builder
+          .where('start_at', '<', endAt)
+          .andWhere('end_at', '>', startAt)
+      }
+    })
+    .orderBy('created_at', 'desc')
+    .offset(after)
+    .limit(first)
+}
+
+const getWordsByDate = async (args) => {
+  const knex = db()
+  const { wordAt } = args
+  // ${new Date(wordAt).toISOString().split('T')[0]}
+  return knex('words')
+    .returning('*')
+    .whereNull('deleted_at')
+    .andWhere((builder) => {
+      return builder.where('word_date', 'like', '%2014-04-17%')
+    })
+    .orderBy('created_at', 'desc')
+}
 
 const createWord = async (args) => {
   const knex = db()
   const {
-    name,
+    word,
+    wordAt,
     translation,
     pronunciation
   } = args.input
-  return knex('word')
+
+  return knex('words')
     .returning('*')
     .insert({
-      id: uuidv4,
+      ...omitBy({
+        word,
+        word_date: wordAt || new Date(),
+        translation,
+        pronunciation
+      }, isUndefined),
       created_at: new Date(),
-      word: name,
-      translation,
-      pronunciation
+      modified_at: null
     })
     .then(rows => {
       return rows.length ? rows[0] : null
@@ -26,12 +82,13 @@ const editWord = async (args) => {
   const knex = db()
   const {
     id,
-    name,
+    word,
+    wordAt,
     translation,
     pronunciation
   } = args.input
 
-  return knex('word')
+  return knex('words')
     .returning('*')
     .whereNull('deleted_at')
     .andWhere({
@@ -39,7 +96,8 @@ const editWord = async (args) => {
     })
     .update({
       modified_at: new Date(),
-      name,
+      word,
+      word_date: wordAt,
       translation,
       pronunciation
     })
@@ -50,7 +108,7 @@ const editWord = async (args) => {
 
 const deleteWord = async (id) => {
   const knex = db()
-  return knex('word')
+  return knex('words')
     .returning('*')
     .whereNull('deleted_at')
     .andWhere({
@@ -65,7 +123,10 @@ const deleteWord = async (id) => {
 }
 
 module.exports = {
+  getWords,
+  getLimitWords,
   createWord,
   editWord,
-  deleteWord
+  deleteWord,
+  getWordsByDate
 }

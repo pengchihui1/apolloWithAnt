@@ -4,10 +4,10 @@ const GraphQLDate = require('graphql-date')
 const GraphQLJSON = require('graphql-type-json')
 
 const typeDefs = /* GraphQL */ `
-  scalar Date
-  scalar JSON
-  scalar Upload
-  scalar LowercaseString
+    scalar Date
+    scalar JSON
+    scalar Upload
+    scalar LowercaseString
 `
 
 const resolvers = {

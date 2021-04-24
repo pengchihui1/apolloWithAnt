@@ -3,13 +3,33 @@ const isUndefined = require('lodash/isUndefined')
 const { db } = require('../knex')
 
 // 获得单个用户
-const getUser = async (id) => {
+const getUser = async ({ search = {} }) => {
   const knex = db()
+  const {
+    id = null,
+    name = null,
+    password = null,
+    email = null,
+    isAdmin = false || ' '
+  } = search
   return knex('users')
     .returning('*')
     .whereNull('deleted_at')
-    .andWhere({
-      id: id
+    .andWhere(builder => {
+      if (id) {
+        return builder.where('id', id)
+      } else if (name && password) {
+        return builder.where('name', name).andWhere('password', password)
+      } else if (email) {
+        return builder.where('email', email)
+      } else {
+        return builder
+          .where('is_admin', isAdmin)
+          .orWhere('id', id)
+          .orWhere('name', name)
+          .orWhere('password', password)
+          .orWhere('email', email)
+      }
     })
     .then(rows => {
       return rows.length ? rows[0] : null
@@ -60,9 +80,9 @@ const getUserByEmail = (email) => {
 // 根據 args 創建新用戶
 const createUser = async (args) => {
   const knex = db()
-  // 限定 input 欄位只有下面這些
   const {
-    name = '',
+    name = null,
+    password = null,
     profilePhoto,
     email,
     isAdmin = false
@@ -73,68 +93,72 @@ const createUser = async (args) => {
     .insert({
       ...omitBy({
         name,
+        password,
         profile_photo: profilePhoto,
         email: email.toLowerCase(),
         is_admin: isAdmin
       }, isUndefined),
-      modified_at: null,
-      created_at: new Date()
+      created_at: new Date(),
+      modified_at: null
+    })
+    .then(rows => {
+      return rows.length ? rows[0] : null
+    })
+}
+const updateUser = async (args) => {
+  const knex = db()
+  const {
+    id = null,
+    name = null,
+    password = null,
+    profilePhoto,
+    email,
+    isAdmin = false
+  } = args.input
+
+  return knex('users')
+    .returning('*')
+    .whereNull('deleted_at')
+    .andWhere({
+      id
+    })
+    .update({
+      modified_at: new Date(),
+      name,
+      password,
+      profile_photo: profilePhoto,
+      email: email.toLowerCase(),
+      is_admin: isAdmin
     })
     .then(rows => {
       return rows.length ? rows[0] : null
     })
 }
 
-// const createOrFindUser = (user, providerMethod) => {
-//   let promise
-//   if (user.id) {
-//     promise = getUserById(user.id)
-//   } else if (user[providerMethod]) {
-//     promise = getUserByIndex(providerMethod, user[providerMethod])
-//       .then(storedUser => {
-//         // 若找到存在於資訊庫的用戶
-//         if (storedUser) {
-//           return storedUser
-//         }
-//         // 不能根據 provider id 找到用戶, 從 email 入手再查多次
+const deleteUser = async (args) => {
+  const knex = db()
+  const { id } = args.input
 
-//         if (user.email) {
-//           return getUserByEmail(user.email)
-//         }
-//         return Promise.resolve(null)
-//       })
-//   } else {
-//     promise = Promise.resolve(null)
-//   }
-
-//   return promise
-//     .then(storedUser => {
-//       if (storedUser && storedUser.id) {
-//         if (!storedUser[providerMethod]) {
-//           return saveUserProvider(
-//             storedUser.id,
-//             providerMethod,
-//             user[providerMethod]
-//           ).then(() => Promise.resolve(storedUser))
-//         } else {
-//           return Promise.resolve(storedUser)
-//         }
-//       }
-//       return storeUser(user)
-//     })
-//     .catch(err => {
-//       if (user.id) {
-//         console.error(err)
-//         return null
-//       }
-//       return storeUser(user)
-//     })
-// }
+  return knex('users')
+    .returning('*')
+    .whereNull('deleted_at')
+    .andWhere({
+      id
+    })
+    .update({
+      deleted_at: new Date()
+    })
+    .then(rows => {
+      return rows.length ? rows[0] : null
+    })
+}
 
 module.exports = {
   getUser,
   getUserByIds,
   getUserByIndex,
   getUserByEmail,
-  createUser
+  createUser,
+  updateUser,
+  deleteUser
 }

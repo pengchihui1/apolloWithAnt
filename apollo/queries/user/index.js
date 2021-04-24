@@ -1,7 +1,7 @@
-import viewer from './user'
+import getUser from './user'
 
 module.exports = {
   Query: {
-    viewer
+    getUser
   }
 }

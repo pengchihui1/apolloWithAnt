@@ -24,7 +24,7 @@ const SectionLogin = () => {
         password: '123456'
       }}
       onSubmit={(values, { setSubmitting, setFieldError, setValues }) => {
-        console.log(values)
+        // console.log(values)
       }}
     >
       {({ isSubmitting, values, setFieldValue }) => (

@@ -30,7 +30,6 @@ export const WordTimeType = gql`
         endAt:Date
         time:Int
     }
-
     extend type Query {
       getWordTime(first: Int = 20, after: Int = 0): [WordTime]
    }

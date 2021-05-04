@@ -10,11 +10,15 @@ import ContainPage from 'components/containPage'
 
 import SectionWord from './sectionWord'
 
+import WordNav from '../wordNav'
+
 const WordPage = () => {
   return (
     <Container height='100vh'>
       <Flex>
         <ContainPage>
+          {/* 导航栏 */}
+          <WordNav />
           {/* 头部 */}
           <HeadTop title='单词系统' />
           {/* 主体 */}

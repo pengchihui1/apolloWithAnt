@@ -1,3 +1,3 @@
-import WordPage from 'views/wordPage'
+import WordPage from 'views/word/wordPage'
 
 export default WordPage

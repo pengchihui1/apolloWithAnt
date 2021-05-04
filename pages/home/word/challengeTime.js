@@ -1,3 +1,3 @@
-import ChallengeTime from 'views/challengeTime'
+import ChallengeTime from 'views/word/challengeTime'
 
 export default ChallengeTime

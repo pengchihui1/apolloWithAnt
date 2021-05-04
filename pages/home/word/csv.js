@@ -1,3 +1,3 @@
-import WordCsvPage from 'views/wordCsvPage'
+import WordCsvPage from 'views/word/wordCsvPage'
 
 export default WordCsvPage

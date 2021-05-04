@@ -1,3 +1,3 @@
-import WordChallengePage from 'views/wordChallengePage'
+import WordChallengePage from 'views/word/wordChallengePage'
 
 export default WordChallengePage

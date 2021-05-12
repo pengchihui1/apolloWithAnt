@@ -6,6 +6,7 @@ export const WordTimeType = gql`
         seq_id: Int
         created_at: Date
         modified_at: Date
+        deleted_at:Date
         start_date:Date
         end_date:Date
         challenge_time:Int
@@ -26,9 +27,6 @@ export const WordTimeType = gql`
 
     input DeleteWordTimeInput{
         id: ID
-        startAt:Date
-        endAt:Date
-        time:Int
     }
     extend type Query {
       getWordTime(first: Int = 20, after: Int = 0): [WordTime]

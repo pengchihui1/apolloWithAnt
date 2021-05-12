@@ -1,12 +1,10 @@
 const { db } = require('../knex')
-const { v4: uuidv4 } = require('uuid')
-
 const getWordTime = async (args) => {
   const knex = db()
   return knex('word_time')
 }
 
-const getLimitWordTime = async ({ first = 20, after = 0 }) => {
+const getLimitWordTime = async ({ first, after }) => {
   const knex = db()
   return knex('word_time')
     .whereNull('deleted_at')
@@ -22,10 +20,10 @@ const creatWordTime = async (args) => {
     endAt,
     time
   } = args.input
-
   return knex('word_time')
     .returning('*')
     .insert({
+      created_at: new Date(),
       start_date: startAt,
       end_date: endAt,
       challenge_time: time
@@ -44,7 +42,6 @@ const updateWordTime = async (args) => {
     time
   } = args.input
   return knex('word_time')
-    .returning('*')
     .whereNull('deleted_at')
     .andWhere({
       id

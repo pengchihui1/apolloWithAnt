@@ -2,8 +2,12 @@ import {
   Box,
   Input,
   Button,
-  Flex
+  Flex,
+  IconButton
 } from '@chakra-ui/react'
+import { useState } from 'react'
+
+import DatePicker from 'react-datepicker'
 
 import {
   Table,
@@ -13,23 +17,29 @@ import {
   TableCell
 } from 'components/table'
 
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+
 const SectionWord = () => {
+  const [startAt, setStartAt] = useState(new Date())
+
   return (
     <Box>
-      {/* 新单词推存 */}
-      <Flex justify='flex-start' mb={2}><Button isLoading={false} colorScheme='twitter' size='sm'>换一批</Button></Flex>
-      <Flex justify='space-around' border='1px solid #CBD5E0' p={2} borderRadius='10px' mt={2}>
-        <Button>Name</Button>
-        <Button>Age</Button>
-        <Button>blessing</Button>
-        <Button>encourage</Button>
-      </Flex>
-
       {/* 搜索 */}
+      <Box className='date-picker-content' border='1px solid #CBD5E0' textAlign='center'>
+        <DatePicker
+          className='input'
+          dateFormat='yyyy-MM-dd'
+          selected={startAt}
+          onChange={date => {
+            setStartAt(date)
+          }}
+          autoComplete='off'
+        />
+      </Box>
       <Box d='flex' w={{ base: '100%', md: '700px' }} mx='auto' mt={4}>
         <Input
           marginLeft='0'
-          placeholder='日期、单词、翻译、读音'
+          placeholder='单词、翻译、读音'
           onChange={() => {}}
         />
         <Button
@@ -42,6 +52,16 @@ const SectionWord = () => {
         >
           搜索
         </Button>
+        <Button
+          colorScheme='blue'
+          minW={{ base: 70, md: 100 }}
+          fontSize={{ base: '14px', md: '16px' }}
+          ml={2}
+          isDisabled={false}
+          onClick={() => {}}
+        >
+          新增
+        </Button>
       </Box>
       {/* 表格 */}
       <Table my={6} textAlign='center'>
@@ -51,6 +71,7 @@ const SectionWord = () => {
             <TableCell>单词</TableCell>
             <TableCell>翻译</TableCell>
             <TableCell>读音</TableCell>
+            <TableCell>操作</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,16 +80,29 @@ const SectionWord = () => {
             <TableCell>345</TableCell>
             <TableCell>345</TableCell>
             <TableCell>345</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>345</TableCell>
-            <TableCell>345</TableCell>
-            <TableCell>345</TableCell>
-            <TableCell>345</TableCell>
+            <TableCell w='15%'>
+              <Flex justify='space-around'>
+                <IconButton
+                  colorScheme='blue'
+                  icon={<EditIcon />}
+                  size='sm'
+                  my={2}
+                  // onClick={() => { setIsInput(true) }}
+                />
+                <IconButton
+                  colorScheme='blue'
+                  icon={<DeleteIcon />}
+                  size='sm'
+                  my={2}
+                  // onClick={() => {
+                  //   deleteClick()
+                  // }}
+                />
+              </Flex>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-
       {/* 翻页 */}
       <Box my={2} d='flex' justifyContent='center'>
         <Button
@@ -93,9 +127,22 @@ const SectionWord = () => {
           下一頁
         </Button>
       </Box>
-
+      {/* 為了去掉點擊是會有黑色邊框 */}
+      <style jsx global>
+        {`
+          .input{
+            text-align: center;
+            cursor:pointer;
+            line-height:30px;
+            background-color: rgba(255,255,255,0.01);
+          }
+          .date-picker-content button:focus,
+          .input:focus{
+            outline: none;
+          }
+      `}
+      </style>
     </Box>
-
   )
 }
 

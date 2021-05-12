@@ -6,6 +6,7 @@ export default gql`
     seq_id
     created_at
     modified_at
+    deleted_at
     start_date
     end_date
     challenge_time

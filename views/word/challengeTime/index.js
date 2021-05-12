@@ -7,7 +7,7 @@ import WordNav from '../wordNav'
 import Seciton from './section'
 const ChallengeTime = () => {
   return (
-    <Container height='100vh'>
+    <Container mb={10}>
       <ContainPage>
         {/* 导航栏 */}
         <WordNav />

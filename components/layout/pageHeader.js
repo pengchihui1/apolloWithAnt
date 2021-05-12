@@ -27,9 +27,9 @@ const Header = ({ hideNavLinks = false, loading = false, schooluser, ...rest }) 
       </HeaderLogo>
       <HeaderCenter my={2}>
         <Flex w='300px' justify='space-around'>
-          <Button icon={IoMdPaper}> 首頁 </Button>
-          <Button icon={MdDashboard}> 學校專頁 </Button>
-          <Button icon={IoMdSearch}> 搜索 </Button>
+          <Button> 首頁 </Button>
+          <Button> 學校專頁 </Button>
+          <Button> 搜索 </Button>
         </Flex>
       </HeaderCenter>
     </HeaderComponent>

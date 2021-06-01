@@ -1,0 +1,7 @@
+{
+    "timeline.excludeSources": [],
+    "emmet.excludeLanguages": [
+    
+        "markdown"
+    ]
+}

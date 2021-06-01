@@ -12,7 +12,7 @@
         "modules/home/*"
       ],
       "word/*": [
-        "modules/word/*"
+        "pages/word/*"
       ]
     }
   }

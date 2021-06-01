@@ -20,6 +20,7 @@ const getWordSatistic = async (args) => {
       `)
     .where({ 't.status': status })
     .whereNotNull('t.id')
+    .whereNotNull('w.word')
     .whereNull('t.deleted_at')
     .groupBy('t.word_id', 't.status')
     .orderBy('number', 'desc')

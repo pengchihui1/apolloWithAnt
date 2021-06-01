@@ -2,24 +2,25 @@ import {
   Grid,
   Box,
   Text,
-  Header
+  Heading
 } from '@chakra-ui/react'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 import WordHead from 'components/header/wordHead'
 
 import { modules } from './module'
 
 const Index = () => {
+  const router = useRouter()
   return (
     <WordHead title='系统'>
       <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-        {modules.map((item, index) => {
+        {!!modules && modules?.map((item, index) => {
           return (
             <Box
+              key={index}
               w='100%'
               p={4}
-              key={index}
               textAlign='center'
               cursor='pointer'
               borderWidth='1px'
@@ -33,8 +34,9 @@ const Index = () => {
               _focus={{
                 boxShadow: 'outline'
               }}
+              onClick={() => { router.push(item.url) }}
             >
-              <Header>{item.moduleName}</Header>
+              <Heading as='h4' size='md' letterSpacing='-.1rem'>{item.moduleName}</Heading>
               <Text>{item.desc}</Text>
             </Box>
           )

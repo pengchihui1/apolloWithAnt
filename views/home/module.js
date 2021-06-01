@@ -3,7 +3,7 @@ export const modules = [
   {
     moduleName: '单词游戏',
     desc: '大陆三年级至高三，用于互动挑战记单词，短句的乐趣！',
-    url: '/home/word'
+    url: 'home/word'
   },
   {
     moduleName: '装饰材料系统',

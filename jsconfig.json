@@ -1,6 +1,19 @@
 {
-    "compilerOptions": {
-      "baseUrl": "."
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "modules/common/*"
+      ],
+      "database": [
+        "database/*"
+      ],
+      "home/*": [
+        "modules/home/*"
+      ],
+      "word/*": [
+        "modules/word/*"
+      ]
     }
   }
-  
+}

@@ -8,6 +8,7 @@ export default async (_parent, _args, _context, _info) => {
   //   translation,
   //   pronunciation
   // }=_args
-  const words = await editWord(_args)
-  return words
+  
+  const word = await editWord(_args)
+  return word
 }

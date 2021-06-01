@@ -2,14 +2,15 @@ import { getLimitWords } from 'shared/db/models/words'
 
 export default async (_parent, _args, _context, _info) => {
   const {
-    filter = {},
-    first = 20,
-    after = 0
+    first = 10,
+    after = 0,
+    filter = {}
   } = _args
+  console.log(filter)
 
-  const wordList = await getLimitWords({ first, after, filter })
+  const dbWords = await getLimitWords(_args)
 
-  if (!wordList || !wordList.length) {
+  if (!dbWords || !dbWords.length) {
     return {
       pageInfo: {
         count: 0,
@@ -21,9 +22,9 @@ export default async (_parent, _args, _context, _info) => {
 
   return {
     pageInfo: {
-      hasNextPage: wordList && wordList.length >= first
+      hasNextPage: dbWords && dbWords.length >= first
     },
-    edges: wordList.map(async (word, i) => {
+    edges: dbWords.map(async (word, i) => {
       return {
         node: {
           ...word

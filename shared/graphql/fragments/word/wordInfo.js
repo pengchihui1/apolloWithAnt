@@ -3,12 +3,12 @@ import gql from 'graphql-tag'
 export default gql`
   fragment wordInfo on Word {
     id
-    seqId
-    createdAt
-    modifiedAt
-    deletedAt
+    seq_id
+    created_at
+    modified_at
+    deleted_at
     word
-    word_data
+    word_date 
     translation
     pronunciation
   }

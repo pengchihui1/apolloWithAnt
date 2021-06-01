@@ -11,7 +11,7 @@ import { FaUpload } from 'react-icons/fa'
 const FileUploadButton = ({ getData, disabled = false }) => {
   const toast = useToast()
   return (
-    <Button variantColor='teal' disabled={disabled} position='relative'>
+    <Button colorScheme='teal' disabled={disabled} position='relative'>
       <Box as={FaUpload} mr={2} />
       <Box as='span'>選擇 CSV 文檔</Box>
       <Input
@@ -58,11 +58,12 @@ const FileUploadButton = ({ getData, disabled = false }) => {
               reader.readAsText(file)
             })
 
-            //   if (getData) getData(content)
+            csvdata.then(content => {
+              if (getData) getData(content)
 
-            //   // 提交完成後清空 file 的值
-            //   input.value = ''
-            // })   // csvdata.then(content => {
+              // 提交完成後清空 file 的值
+              input.value = ''
+            })
           }
         }}
       />

@@ -12,10 +12,10 @@ module.exports = {
       database: 'postgres'
     },
     migrations: {
-      directory: './table/migrations'
+      directory: 'database/migrations'
     },
     seeds: {
-      directory: './table/seeds'
+      directory: 'database/seeds'
     },
     debug: true
   },
@@ -28,10 +28,10 @@ module.exports = {
       database: 'postgres'
     },
     migrations: {
-      directory: './table/migrations'
+      directory: 'database/migrations'
     },
     seeds: {
-      directory: './table/seeds'
+      directory: 'database/seeds'
     }
   }
 

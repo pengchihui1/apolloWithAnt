@@ -1,37 +1,45 @@
 import {
-  HStack
+  Grid,
+  Box,
+  Text,
+  Header
 } from '@chakra-ui/react'
 import Router from 'next/router'
 
 import WordHead from 'components/header/wordHead'
-import Caserl from 'components/common/caserl'
+
+import { modules } from './module'
 
 const Index = () => {
-  const modules = [
-    { title: '单词游戏', desc: '大陆三年级至高三，用于互动挑战记单词，短句的乐趣！', url: '/home/word' },
-    { title: '装饰材料系统', desc: '打怪开始,先从用户管理开始', url: '' },
-    { title: '市场分析区块链系统', desc: '打怪开始,先从用户管理开始', url: '' },
-    { title: '地图与支付接口', desc: '打怪开始,先从用户管理开始', url: '' },
-    { title: '差异化学习系统', desc: '弥补孩子差异化内容知识，让孩子变得更自信', url: '' }
-  ]
-
   return (
-    <WordHead title='单词汇入'>
-      <HStack spacing={8} align='flex-start'>
-        {modules.map((module, index) => {
+    <WordHead title='系统'>
+      <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+        {modules.map((item, index) => {
           return (
-            <Caserl
-              className='casecursor'
-              title={module.title}
-              desc={module.desc}
+            <Box
+              w='100%'
+              p={4}
               key={index}
-              onClick={() => {
-                Router.push(module.url)
+              textAlign='center'
+              cursor='pointer'
+              borderWidth='1px'
+              borderRadius='md'
+              boxShadow='md'
+              _checked={{
+                bg: 'teal.600',
+                color: 'white',
+                borderColor: 'teal.600'
               }}
-            />
+              _focus={{
+                boxShadow: 'outline'
+              }}
+            >
+              <Header>{item.moduleName}</Header>
+              <Text>{item.desc}</Text>
+            </Box>
           )
         })}
-      </HStack>
+      </Grid>
       <style>
         {`
           .casecursor{cursor:pointer;}

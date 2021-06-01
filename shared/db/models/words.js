@@ -1,37 +1,71 @@
 const { db } = require('../knex')
-const { v4: uuidv4 } = require('uuid')
 const omitBy = require('lodash/omitBy')
 const isUndefined = require('lodash/isUndefined')
+
+const getWordById = async (id) => {
+  const knex = db()
+  return knex('words')
+    .whereNull('deleted_at')
+    .andWhere({
+      id
+    })
+    .then(rows => {
+      return rows.length ? rows[0] : null
+    })
+}
 
 const getWords = async () => {
   const knex = db()
   return knex.select('*').from('words')
 }
 
-const getLimitWords = async ({ first = 20, after = 0, filter = {} }) => {
+const getLimitWords = async (args) => {
   const knex = db()
   const {
-    // word = null,
-    // wordAt = null,
-    // translation = null,
-    // pronunciation = null,
-    startAt = null,
-    endAt = null
-  } = filter
+    first,
+    after,
+    filter: {
+      startAt,
+      endAt,
+      search
+    }
+  } = args
 
   return knex('words')
     .whereNull('deleted_at')
-    // .andWhere({
-    //   word,
-    //   word_data:wordAt,
-    //   translation,
-    //   pronunciation
-    // })
     .andWhere(builder => {
-      if (startAt && endAt) {
+      if (!!startAt && !!endAt && !search) {
         return builder
-          .where('start_at', '<', endAt)
-          .andWhere('end_at', '>', startAt)
+          .where('word_date', '<=', endAt)
+          .andWhere('word_date', '>=', startAt)
+      } else if (!!startAt && !!endAt && !!search) {
+        return builder
+          .orWhere(knex.raw('lower(word)'), 'like', knex.raw(`lower('%${search}%')`))
+          .orWhere(knex.raw('lower(translation)'), 'like', knex.raw(`lower('%${search}%')`))
+      }
+    })
+    .orderBy('seq_id', 'asc', 'created_at', 'asc')
+    .offset(after)
+    .limit(first)
+}
+
+const getWordsByTime = async (args) => {
+  const knex = db()
+  const {
+    first,
+    after,
+    time
+  } = args
+
+  console.log(time.toISOString().split('T')[0])
+
+  return knex('words')
+    .returning('*')
+    .whereNull('deleted_at')
+    .andWhere(builder => {
+      if (time) {
+        return builder
+          .where(knex.raw('lower(word_date::text)'), 'like', knex.raw(`lower('%${time}%')`))
       }
     })
     .orderBy('created_at', 'desc')
@@ -39,24 +73,11 @@ const getLimitWords = async ({ first = 20, after = 0, filter = {} }) => {
     .limit(first)
 }
 
-const getWordsByDate = async (args) => {
-  const knex = db()
-  const { wordAt } = args
-  // ${new Date(wordAt).toISOString().split('T')[0]}
-  return knex('words')
-    .returning('*')
-    .whereNull('deleted_at')
-    .andWhere((builder) => {
-      return builder.where('word_date', 'like', '%2014-04-17%')
-    })
-    .orderBy('created_at', 'desc')
-}
-
 const createWord = async (args) => {
   const knex = db()
   const {
-    word,
-    wordAt,
+    name,
+    time,
     translation,
     pronunciation
   } = args.input
@@ -65,8 +86,8 @@ const createWord = async (args) => {
     .returning('*')
     .insert({
       ...omitBy({
-        word,
-        word_date: wordAt || new Date(),
+        word: name,
+        word_date: time,
         translation,
         pronunciation
       }, isUndefined),
@@ -109,7 +130,6 @@ const editWord = async (args) => {
 const deleteWord = async (id) => {
   const knex = db()
   return knex('words')
-    .returning('*')
     .whereNull('deleted_at')
     .andWhere({
       id
@@ -128,5 +148,6 @@ module.exports = {
   createWord,
   editWord,
   deleteWord,
-  getWordsByDate
+  getWordsByTime,
+  getWordById
 }

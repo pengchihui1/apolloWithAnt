@@ -14,8 +14,8 @@ export const WordType = gql`
   }
 
   input CreateWordInput{
-    word:String
-    wordAt:Date
+    name:String
+    time:Date
     translation:String
     pronunciation:String
   }
@@ -27,40 +27,30 @@ export const WordType = gql`
      translation:String
      pronunciation:String
   }
-
+  
   input DeleteWordInput{
     id: String
   }
 
   type WordsConnection {
     pageInfo: PageInfo!
-    edges: [WordsEdge!]
+    edges: [WordEdge!]
   }
 
-  type WordsEdge {
+  type WordEdge {
     cursor: Int!
     node: Word!
   }
-
-  input WordsFilter {
-    first: Int
-    after: Int
-    search:String
-  }
  
   input WordFilter{
-    word:String
-    wordAt:Date
-    translation:String
-    pronunciation:String 
     startAt:Date
     endAt:Date
+    search:String
   }
   
   extend type Query {
     getWords:[Word]
-    getWordsFilter(filter: WordFilter , first: Int = 20, after: Int = 0): WordsConnection
-    getWordsByDate(wordAt:Date):[Word]
+    getWordsFilter(first:Int = 10 , after:Int = 0 , filter: WordFilter): WordsConnection
   }
 
   extend type Mutation {
@@ -68,5 +58,4 @@ export const WordType = gql`
     updateWord(input: EditWordInput): Word
     deleteWord(input: DeleteWordInput): Word
   }
-
 `
